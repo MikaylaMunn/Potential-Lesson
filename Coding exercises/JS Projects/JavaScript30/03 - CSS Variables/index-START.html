@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scoped CSS Variables and JS</title>
+  <link rel="icon" href="https://fav.farm/🔥" />
+</head>
+<body>
+ <!-- This is a heading that describes the purpose of the code. -->
+<h2>Update CSS Variables with <span class='hl'>JS</span></h2>
+
+<!-- This section contains form controls for adjusting CSS variables. -->
+<div class="controls">
+  <!-- Label for controlling the spacing CSS variable. -->
+  <label for="spacing">Spacing:</label>
+  <!-- Input element for adjusting spacing with a range slider. -->
+  <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
+
+  <!-- Label for controlling the blur CSS variable. -->
+  <label for="blur">Blur:</label>
+  <!-- Input element for adjusting blur with a range slider. -->
+  <!-- It includes a custom data attribute "data-sizing" set to "px". -->
+  <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
+
+  <!-- Label for controlling the base color CSS variable. -->
+  <label for="base">Base Color</label>
+  <!-- Input element for choosing a color with a color picker. -->
+  <input id="base" type="color" name="base" value="#ffc600">
+</div>
+
+<!-- An image that will be affected by the CSS variables set above. -->
+<img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
+
+
+  <style>
+   /* getting the root element */
+:root {
+  /* Defining CSS variables */
+  --base: #ffc600;      /* A variable for a base color */
+  --spacing: 10px;      /* A variable for spacing value */
+  --blur: 10px;         /* A variable for blur value */
+}
+
+/* Using javascript in css */
+img {
+  /* Applying styles to image elements */
+  padding: var(--spacing);     /* Setting padding using the spacing variable */
+  background: var(--base);     /* Setting background color using the base variable */
+  filter: blur(var(--blur));   /* Applying a blur filter using the blur variable */
+}
+
+.hl {
+  /* Defining a class style */
+  color: var(--base);    /* Setting text color using the base variable */
+}
+
+/*
+  misc styles, nothing to do with CSS variables
+*/
+
+body {
+  /* Styles for the body element */
+  text-align: center;            /* Center-aligning text */
+  background: #193549;           /* Setting background color */
+  color: white;                  /* Setting text color */
+  font-family: 'helvetica neue', sans-serif;  /* Setting font family */
+  font-weight: 100;              /* Setting font weight */
+  font-size: 50px;               /* Setting font size */
+}
+
+.controls {
+  /* Styles for elements with class "controls" */
+  margin-bottom: 50px;  /* Setting margin bottom */
+}
+
+input {
+  /* Styles for input elements */
+  width: 100px;   /* Setting width */
+}
+
+  </style>
+
+  <script>
+    // Getting all the input elements with the class 'controls'
+const inputs = document.querySelectorAll('.controls input');
+
+// This function is executed when an input element's value changes
+function handleUpdate() {
+  // Get the 'sizing' data attribute of the input, or an empty string if it doesn't exist
+  const suffix = this.dataset.sizing || '';
+  
+  // Update a CSS variable (custom property) on the root element
+  // The variable name is determined by the 'name' attribute of the input element
+  // The new value is determined by the input's current value plus the 'suffix' (if any)
+  // This allows for dynamically changing CSS properties with optional sizing units
+  document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+}
+
+// Add a 'change' event listener to each input element
+// This event is triggered when the input's value changes (e.g., on input blur)
+inputs.forEach(input => input.addEventListener('change', handleUpdate));
+
+// Add a 'mousemove' event listener to each input element
+// This event is triggered when the mouse pointer moves over the input
+// It continuously updates the CSS variable as you drag the input slider (real-time update)
+inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
+
+  </script>
+
+</body>
+</html>

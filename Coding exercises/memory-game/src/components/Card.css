@@ -1,0 +1,36 @@
+/* Card.css */
+
+.memory-card {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ccc;
+    transition: transform 0.3s ease;
+  }
+  
+  .memory-card.flipped {
+    transform: rotateY(180deg);
+  }
+  
+  .memory-card.matched {
+    visibility: hidden; /* Hide matched cards */
+  }
+  
+  .card-content {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  /* Apply a fixed width and height to the images */
+.card-content img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover; /* Maintain image aspect ratio and cover the container */
+  border: 2px solid #000; /* Add a border for visual distinction */
+  margin: 5px; /* Add margin to separate the images */
+}
+
+  
